@@ -1,11 +1,11 @@
-package ea.slartibartfast.demospringcleanarch.domain.usecases.order;
+package ea.slartibartfast.demospringcleanarch.domain.usecase.order;
 
 import ea.slartibartfast.demospringcleanarch.domain.model.*;
-import ea.slartibartfast.demospringcleanarch.domain.usecases.UseCase;
-import ea.slartibartfast.demospringcleanarch.domain.usecases.product.GetProductsByStoreAndProductsIdUseCase;
-import lombok.Getter;
+import ea.slartibartfast.demospringcleanarch.domain.usecase.UseCase;
+import ea.slartibartfast.demospringcleanarch.domain.usecase.product.GetProductsByStoreAndProductsIdUseCase;
+import ea.slartibartfast.demospringcleanarch.domain.usecase.product.ProductRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 import java.util.List;
 import java.util.Map;
@@ -17,11 +17,14 @@ public class CreateOrderUseCase extends UseCase<CreateOrderUseCase.InputValues, 
 
     private final GetProductsByStoreAndProductsIdUseCase getProductsByStoreAndProductsIdUseCase;
     private final OrderRepository orderRepository;
+    private final ProductRepository productRepository;
 
-
+    @Transactional
     @Override
     public OutputValues execute(InputValues input) {
         Order order = createOrder(input);
+
+        updateStock(order);
 
         return new OutputValues(orderRepository.persist(order));
     }
@@ -31,10 +34,17 @@ public class CreateOrderUseCase extends UseCase<CreateOrderUseCase.InputValues, 
 
         return Order.newInstance(
                 Identity.nothing(),
-                input.getCustomer(),
+                input.customer(),
                 getFirstProductStore(orderItems),
                 orderItems
         );
+    }
+
+    private void updateStock(Order order) {
+        order.orderItems()
+             .stream()
+             .map(OrderItem::getProduct)
+             .forEach(product -> productRepository.updateStock(product.getId(), product.getQuantity() - 1));
     }
 
     private Store getFirstProductStore(List<OrderItem> orderItems) {
@@ -44,22 +54,21 @@ public class CreateOrderUseCase extends UseCase<CreateOrderUseCase.InputValues, 
     private List<OrderItem> createOrderItems(InputValues input) {
         Map<Identity, Product> productMap = getProducts(input);
 
-        return input
-                .getOrderItems()
-                .stream()
-                .map(inputItem -> createOrderItem(inputItem, productMap))
-                .collect(Collectors.toList());
+        return input.orderItems()
+                    .stream()
+                    .map(inputItem -> createOrderItem(inputItem, productMap))
+                    .toList();
     }
 
     private OrderItem createOrderItem(InputItem inputItem, Map<Identity, Product> productMap) {
-        Product product = productMap.get(inputItem.getId());
-        return OrderItem.newInstance(Identity.nothing(), product, inputItem.getQuantity());
+        Product product = productMap.get(inputItem.id());
+        return OrderItem.newInstance(Identity.nothing(), product, inputItem.quantity());
     }
 
     private Map<Identity, Product> getProducts(InputValues input) {
         GetProductsByStoreAndProductsIdUseCase.InputValues inputValues =
                 new GetProductsByStoreAndProductsIdUseCase.InputValues(
-                        input.getStoreId(), createListOfProductsId(input.getOrderItems()));
+                        input.storeId(), createListOfProductsId(input.orderItems()));
 
         return getProductsByStoreAndProductsIdUseCase.execute(inputValues)
                                                      .products()
@@ -70,20 +79,16 @@ public class CreateOrderUseCase extends UseCase<CreateOrderUseCase.InputValues, 
     private List<Identity> createListOfProductsId(List<InputItem> inputItems) {
         return inputItems
                 .stream()
-                .map(InputItem::getId)
-                .collect(Collectors.toList());
+                .map(InputItem::id)
+                .toList();
     }
 
-    @Getter
     public record InputValues (Customer customer, Identity storeId, List<InputItem> orderItems) implements UseCase.InputValues {
     }
 
-    @Setter
-    @Getter
     public record OutputValues(Order order) implements UseCase.OutputValues {
     }
 
-    @Getter
     public record InputItem(Identity id, int quantity) {
     }
 }

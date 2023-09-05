@@ -1,11 +1,10 @@
-package ea.slartibartfast.demospringcleanarch.domain.usecases;
+package ea.slartibartfast.demospringcleanarch.domain.usecase;
 
-import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 
 public interface UseCaseExecutor {
-    <RX, I extends UseCase.InputValues, O extends UseCase.OutputValues> CompletableFuture<RX> execute(
+    <R, I extends UseCase.InputValues, O extends UseCase.OutputValues> R execute(
             UseCase<I, O> useCase,
             I input,
-            Function<O, RX> outputMapper);
+            Function<O, R> outputMapper);
 }

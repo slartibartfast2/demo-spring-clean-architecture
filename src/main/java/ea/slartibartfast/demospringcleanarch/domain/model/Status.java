@@ -1,2 +1,9 @@
-package ea.slartibartfast.demospringcleanarch.domain.model;public enum Status {
+package ea.slartibartfast.demospringcleanarch.domain.model;
+
+
+public enum Status {
+    OPEN,
+    PAID,
+    DELIVERED,
+    CANCELLED;
 }

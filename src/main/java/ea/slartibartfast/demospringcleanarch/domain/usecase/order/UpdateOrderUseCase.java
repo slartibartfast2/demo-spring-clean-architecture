@@ -1,10 +1,9 @@
-package ea.slartibartfast.demospringcleanarch.domain.usecases.order;
+package ea.slartibartfast.demospringcleanarch.domain.usecase.order;
 
 import ea.slartibartfast.demospringcleanarch.domain.model.Identity;
 import ea.slartibartfast.demospringcleanarch.domain.model.Order;
 import ea.slartibartfast.demospringcleanarch.domain.model.exception.NotFoundException;
-import ea.slartibartfast.demospringcleanarch.domain.usecases.UseCase;
-import lombok.Getter;
+import ea.slartibartfast.demospringcleanarch.domain.usecase.UseCase;
 
 public abstract class UpdateOrderUseCase extends UseCase<UpdateOrderUseCase.InputValues, UpdateOrderUseCase.OutputValues> {
     protected OrderRepository repository;
@@ -30,7 +29,6 @@ public abstract class UpdateOrderUseCase extends UseCase<UpdateOrderUseCase.Inpu
         return new OutputValues(this.repository.persist(order));
     }
 
-    @Getter
     public record InputValues(Identity id) implements UseCase.InputValues {
     }
 

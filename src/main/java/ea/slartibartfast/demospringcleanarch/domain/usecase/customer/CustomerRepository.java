@@ -1,4 +1,4 @@
-package ea.slartibartfast.demospringcleanarch.domain.usecases.customer;
+package ea.slartibartfast.demospringcleanarch.domain.usecase.customer;
 
 
 import ea.slartibartfast.demospringcleanarch.data.db.jpa.entity.CustomerData;

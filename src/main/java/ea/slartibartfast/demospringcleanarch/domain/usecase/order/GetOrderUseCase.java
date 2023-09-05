@@ -1,10 +1,9 @@
-package ea.slartibartfast.demospringcleanarch.domain.usecases.order;
+package ea.slartibartfast.demospringcleanarch.domain.usecase.order;
 
 import ea.slartibartfast.demospringcleanarch.domain.model.Identity;
 import ea.slartibartfast.demospringcleanarch.domain.model.Order;
 import ea.slartibartfast.demospringcleanarch.domain.model.exception.NotFoundException;
-import ea.slartibartfast.demospringcleanarch.domain.usecases.UseCase;
-import lombok.Getter;
+import ea.slartibartfast.demospringcleanarch.domain.usecase.UseCase;
 
 public class GetOrderUseCase extends UseCase<GetOrderUseCase.InputValues, GetOrderUseCase.OutputValues> {
     private OrderRepository repository;
@@ -19,14 +18,12 @@ public class GetOrderUseCase extends UseCase<GetOrderUseCase.InputValues, GetOrd
 
         return repository.getById(id)
                          .map(OutputValues::new)
-                         .orElseThrow(() -> new NotFoundException("Order %s not found", id.getNumber()));
+                         .orElseThrow(() -> new NotFoundException("Order %s not found", id.number()));
     }
 
-    @Getter
     public record InputValues(Identity id) implements UseCase.InputValues {
     }
 
-    @Getter
     public record OutputValues(Order order) implements UseCase.OutputValues {
     }
 }

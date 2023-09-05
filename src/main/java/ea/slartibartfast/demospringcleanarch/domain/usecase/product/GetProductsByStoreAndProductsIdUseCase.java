@@ -1,10 +1,9 @@
-package ea.slartibartfast.demospringcleanarch.domain.usecases.product;
+package ea.slartibartfast.demospringcleanarch.domain.usecase.product;
 
 import ea.slartibartfast.demospringcleanarch.domain.model.Identity;
-import ea.slartibartfast.demospringcleanarch.domain.model.exception.NotFoundException;
 import ea.slartibartfast.demospringcleanarch.domain.model.Product;
-import ea.slartibartfast.demospringcleanarch.domain.usecases.UseCase;
-import lombok.Getter;
+import ea.slartibartfast.demospringcleanarch.domain.model.exception.NotFoundException;
+import ea.slartibartfast.demospringcleanarch.domain.usecase.UseCase;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -56,14 +55,14 @@ public class GetProductsByStoreAndProductsIdUseCase extends UseCase<GetProductsB
         return foundProducts
                 .stream()
                 .map(Product::getId)
-                .map(Identity::getNumber)
+                .map(Identity::number)
                 .collect(Collectors.toSet());
     }
 
     private Set<Long> createDistinctProductsIdSet(List<Identity> distinctProductsId) {
         return distinctProductsId
                 .stream()
-                .map(Identity::getNumber)
+                .map(Identity::number)
                 .collect(Collectors.toSet());
     }
 
@@ -77,7 +76,6 @@ public class GetProductsByStoreAndProductsIdUseCase extends UseCase<GetProductsB
     public record InputValues(Identity storeId, List<Identity> productsId) implements UseCase.InputValues {
     }
 
-    @Getter
     public record OutputValues(List<Product> products) implements UseCase.OutputValues {
     }
 }

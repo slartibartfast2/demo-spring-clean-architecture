@@ -1,4 +1,4 @@
-package ea.slartibartfast.demospringcleanarch.domain.usecases;
+package ea.slartibartfast.demospringcleanarch.domain.usecase;
 
 public abstract class UseCaseOnlyOutput<O extends UseCase.OutputValues> {
 

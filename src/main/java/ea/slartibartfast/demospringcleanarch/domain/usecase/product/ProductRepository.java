@@ -1,4 +1,4 @@
-package ea.slartibartfast.demospringcleanarch.domain.usecases.product;
+package ea.slartibartfast.demospringcleanarch.domain.usecase.product;
 
 import ea.slartibartfast.demospringcleanarch.domain.model.Identity;
 import ea.slartibartfast.demospringcleanarch.domain.model.Product;
@@ -14,4 +14,6 @@ public interface ProductRepository {
     List<Product> searchByNameOrDescription(String searchText);
 
     List<Product> searchProductsByStoreAndProductsId(Identity storeId, List<Identity> productsId);
+
+    void updateStock(Identity id, Integer newStockQuantity);
 }

@@ -1,4 +1,4 @@
-package ea.slartibartfast.demospringcleanarch.infrastructure.usecase.security;
+package ea.slartibartfast.demospringcleanarch.infrastructure.usecase.model;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 

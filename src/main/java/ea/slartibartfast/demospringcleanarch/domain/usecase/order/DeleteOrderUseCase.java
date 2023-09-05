@@ -1,4 +1,4 @@
-package ea.slartibartfast.demospringcleanarch.domain.usecases.order;
+package ea.slartibartfast.demospringcleanarch.domain.usecase.order;
 
 import ea.slartibartfast.demospringcleanarch.domain.model.Order;
 

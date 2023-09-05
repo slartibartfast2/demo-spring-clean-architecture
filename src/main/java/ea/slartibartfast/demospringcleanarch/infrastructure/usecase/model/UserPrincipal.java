@@ -1,4 +1,4 @@
-package ea.slartibartfast.demospringcleanarch.infrastructure.usecase.security;
+package ea.slartibartfast.demospringcleanarch.infrastructure.usecase.model;
 
 import ea.slartibartfast.demospringcleanarch.data.db.jpa.entity.CustomerData;
 import lombok.*;

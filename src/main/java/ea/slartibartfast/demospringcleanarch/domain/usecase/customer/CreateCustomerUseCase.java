@@ -1,9 +1,8 @@
-package ea.slartibartfast.demospringcleanarch.domain.usecases.customer;
+package ea.slartibartfast.demospringcleanarch.domain.usecase.customer;
 
 import ea.slartibartfast.demospringcleanarch.domain.model.Customer;
 import ea.slartibartfast.demospringcleanarch.domain.model.exception.ValidationException;
-import ea.slartibartfast.demospringcleanarch.domain.usecases.UseCase;
-import lombok.Getter;
+import ea.slartibartfast.demospringcleanarch.domain.usecase.UseCase;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -27,12 +26,10 @@ public class CreateCustomerUseCase extends UseCase<CreateCustomerUseCase.InputVa
         return new OutputValues(repository.persist(customer));
     }
 
-    @Getter
     public record InputValues(String name, String email, String address,
                               String password) implements UseCase.InputValues {
     }
 
-    @Getter
     public record OutputValues(Customer customer) implements UseCase.OutputValues {
     }
 }

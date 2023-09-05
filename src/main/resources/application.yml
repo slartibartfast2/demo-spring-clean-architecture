@@ -1,1 +1,20 @@
+spring:
+  application:
+    name: order-delivery-service
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+  h2:
+    console:
+      enabled: false
 
+server:
+  servlet:
+    context-path: /api/v1
+
+app:
+  security:
+    jwtExpirationInMs: 604800000
+    signing:
+      key: 413F4428472B4B6250655368566D5970337336763979244226452948404D6351

@@ -1,2 +1,4 @@
-package ea.slartibartfast.demospringcleanarch.infrastructure.rest.model;public class ApiResponse {
+package ea.slartibartfast.demospringcleanarch.infrastructure.rest.model;
+
+public record ApiResponse(Boolean success, String message) {
 }

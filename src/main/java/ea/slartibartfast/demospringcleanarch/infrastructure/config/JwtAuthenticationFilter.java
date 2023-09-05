@@ -1,5 +1,7 @@
-package ea.slartibartfast.demospringcleanarch.infrastructure.usecase.security;
+package ea.slartibartfast.demospringcleanarch.infrastructure.config;
 
+import ea.slartibartfast.demospringcleanarch.infrastructure.usecase.security.JwtService;
+import ea.slartibartfast.demospringcleanarch.infrastructure.usecase.security.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,6 +22,7 @@ import java.io.IOException;
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
+
     private final JwtService jwtService;
     private final UserService userService;
 
